@@ -1,0 +1,99 @@
+version: '3.5'
+
+services:
+
+    tailscale:
+        image: jonoh/tailscale:1.12.3
+        restart: always
+        volumes:
+            - /naspool/data/tailscale:/var/lib/tailscale
+        devices:
+            - /dev/net/tun:/dev/net/tun
+        network_mode: host
+        privileged: true
+        environment:
+            - AUTH_KEY=${TAILSCALE_AUTH_KEY}
+        command: --advertise-exit-node --advertise-routes=10.0.8.0/24 --hostname=nas
+
+    socks_proxy:
+        image: jonoh/socks:1.4.2
+        restart: always
+        ports:
+            - 1080:1080
+
+    homebridge:
+        image: jonoh/homebridge:1.3.4
+        restart: always
+        network_mode: host
+        environment:
+            - TZ=Pacific/Auckland
+            - PGID=1000
+            - PUID=1000
+            - HOMEBRIDGE_CONFIG_UI=1
+            - HOMEBRIDGE_INSECURE=1
+        volumes:
+            - /naspool/data/homebridge:/homebridge
+
+    cloudflare_homebridge:
+        image: jonoh/cloudflared:2021.8.2
+        restart: always
+        volumes:
+            - /naspool/data/cloudflare_homebridge:/config
+        environment:
+            - TZ=Pacific/Auckland
+            - TUNNEL_URL=http://homebridge:8581
+            - ACCOUNT_ID=${CF_ACCOUNT_ID}
+            - TUNNEL_NAME=homebridge
+            - TUNNEL_ID=${HOMEBRIDGE_TUNNEL_ID}
+            - TUNNEL_SECRET=${HOMEBRIDGE_TUNNEL_SECRET}
+
+    rclone_serve_backup:
+        image: rclone/rclone:1.56.0
+        restart: always
+        entrypoint: nice
+        command: >
+            -n 10 rclone
+            serve sftp
+            --addr :2022
+            --vfs-cache-mode writes
+            --authorized-keys /config/authorized_keys
+            jotta:/backup
+        volumes:
+            - /naspool/data/rclone_serve_backup:/config
+            - /naspool/caches/rclone_serve_backup:/root/.cache
+
+    duplicacy_root:
+        image: jonoh/duplicacy:2.7.2
+        restart: always
+        environment:
+            - BACKUP_CRON=0 * * * *
+            - PRUNE_CRON=34 1 * * sun
+            - RUN_JOB_IMMEDIATELY=yes
+            - SNAPSHOT_ID=nas_root
+            - STORAGE_URL=/storage
+            - JOB_RANDOM_DELAY=30
+            - PRUNE_KEEP_POLICIES=0:360;30:180;7:30;1:7
+            - FILTER_PATTERNS=-naspool/;-sys/;-dev/;-var/lib/
+        volumes:
+            - /:/data:ro
+            - /naspool/data/duplicacy_root:/config
+            - /naspool/Backups/root:/storage
+
+    duplicacy_naspool:
+        image: jonoh/duplicacy:2.7.2
+        restart: always
+        environment:
+            - BACKUP_CRON=1 1 * * *
+            - RUN_JOB_IMMEDIATELY=yes
+            - PRUNE_CON=5 3 * * sun
+            - SNAPSHOT_ID=naspool
+            - DUPLICACY_SSH_KEY_FILE=/config/ssh_key
+            - DUPLICACY_PASSWORD=${DUPLICACY_PASSWORD}
+            - STORAGE_URL=sftp://rclone_serve_backup:2022//duplicacy
+            - JOB_RANDOM_DELAY=300
+            - PRUNE_KEEP_POLICIES=0:360;30:180;7:30;1:7
+            - PRE_BACKUP_SCRIPT=/usr/local/bin/pre_backup.sh
+        volumes:
+            - /naspool:/data
+            - /naspool/data/duplicacy_naspool:/config
+            - ./config/duplicacy_naspool/pre_backup.sh:/usr/local/bin/pre_backup.sh
