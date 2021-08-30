@@ -31,17 +31,19 @@ services:
             - PUID=1000
             - HOMEBRIDGE_CONFIG_UI=1
             - HOMEBRIDGE_INSECURE=1
+            - HOMEBRIDGE_CONFIG_UI_PORT=8581
         volumes:
             - /naspool/data/homebridge:/homebridge
 
     cloudflare_homebridge:
         image: jonoh/cloudflared:2021.8.2
         restart: always
+        network_mode: host
         volumes:
             - /naspool/data/cloudflare_homebridge:/config
         environment:
             - TZ=Pacific/Auckland
-            - TUNNEL_URL=http://homebridge:8581
+            - TUNNEL_URL=http://localhost:8581
             - ACCOUNT_ID=${CF_ACCOUNT_ID}
             - TUNNEL_NAME=homebridge
             - TUNNEL_ID=${HOMEBRIDGE_TUNNEL_ID}
