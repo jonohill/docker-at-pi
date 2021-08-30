@@ -43,7 +43,7 @@ services:
             - /naspool/data/cloudflare_homebridge:/config
         environment:
             - TZ=Pacific/Auckland
-            - TUNNEL_URL=http://localhost:8581
+            - TUNNEL_URL=http://localhost:10380
             - ACCOUNT_ID=${CF_ACCOUNT_ID}
             - TUNNEL_NAME=homebridge
             - TUNNEL_ID=${HOMEBRIDGE_TUNNEL_ID}
