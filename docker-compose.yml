@@ -101,13 +101,9 @@ services:
             - ./config/duplicacy_naspool/pre_backup.sh:/usr/local/bin/pre_backup.sh
 
     sponsorblockcast:
-        image: ghcr.io/nichobi/sponsorblockcast:latest
+        image: erdnaxeli/castblock:latest
+        restart: always
         network_mode: host
-        environment:
-            SBCPOLLINTERVAL: 1
-            SBCSCANINTERVAL: 300
-            SBCCATEGORIES: sponsor
-            SBCDIR: /tmp/sponsorblockcast
         cap_add: 
             - NET_ADMIN
-        restart: always
+        command: --mute-ads
