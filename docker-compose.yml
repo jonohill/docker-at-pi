@@ -21,33 +21,33 @@ services:
         ports:
             - 1080:1080
 
-    # homebridge:
-    #     image: jonoh/homebridge:1.3.4
-    #     restart: always
-    #     network_mode: host
-    #     environment:
-    #         - TZ=Pacific/Auckland
-    #         - PGID=1000
-    #         - PUID=1000
-    #         - HOMEBRIDGE_CONFIG_UI=1
-    #         - HOMEBRIDGE_INSECURE=1
-    #         - HOMEBRIDGE_CONFIG_UI_PORT=8581
-    #     volumes:
-    #         - ./data/homebridge:/homebridge
+    homebridge:
+        image: jonoh/homebridge:1.3.4
+        restart: always
+        network_mode: host
+        environment:
+            - TZ=Pacific/Auckland
+            - PGID=1000
+            - PUID=1000
+            - HOMEBRIDGE_CONFIG_UI=1
+            - HOMEBRIDGE_INSECURE=1
+            - HOMEBRIDGE_CONFIG_UI_PORT=8581
+        volumes:
+            - ./data/homebridge:/homebridge
 
-    # cloudflare_homebridge:
-    #     image: jonoh/cloudflared:2021.8.2
-    #     restart: always
-    #     network_mode: host
-    #     volumes:
-    #         - ./data/cloudflare_homebridge:/config
-    #     environment:
-    #         - TZ=Pacific/Auckland
-    #         - TUNNEL_URL=http://localhost:10380
-    #         - ACCOUNT_ID=${CF_ACCOUNT_ID}
-    #         - TUNNEL_NAME=homebridge
-    #         - TUNNEL_ID=${HOMEBRIDGE_TUNNEL_ID}
-    #         - TUNNEL_SECRET=${HOMEBRIDGE_TUNNEL_SECRET}
+    cloudflare_homebridge:
+        image: jonoh/cloudflared:2021.8.2
+        restart: always
+        network_mode: host
+        volumes:
+            - ./data/cloudflare_homebridge:/config
+        environment:
+            - TZ=Pacific/Auckland
+            - TUNNEL_URL=http://localhost:10380
+            - ACCOUNT_ID=${CF_ACCOUNT_ID}
+            - TUNNEL_NAME=homebridge
+            - TUNNEL_ID=${HOMEBRIDGE_TUNNEL_ID}
+            - TUNNEL_SECRET=${HOMEBRIDGE_TUNNEL_SECRET}
 
     rclone_serve_backup:
         image: rclone/rclone:1.56.0
