@@ -79,23 +79,23 @@ services:
     #         - ./data/duplicacy_root:/config
     #         - /naspool/Backups/root:/storage
 
-    # duplicacy_naspool:
-    #     image: jonoh/duplicacy:2.7.2
-    #     restart: always
-    #     environment:
-    #         - BACKUP_CRON=1 1 * * *
-    #         - RUN_JOB_IMMEDIATELY=yes
-    #         - PRUNE_CON=5 3 * * sun
-    #         - SNAPSHOT_ID=naspool
-    #         - DUPLICACY_SSH_KEY_FILE=/config/ssh_key
-    #         - DUPLICACY_PASSWORD=${DUPLICACY_PASSWORD}
-    #         - STORAGE_URL=sftp://rclone_serve_backup:2022//duplicacy
-    #         - JOB_RANDOM_DELAY=300
-    #         - PRUNE_KEEP_POLICIES=0:360;30:180;7:30;1:7
-    #         - PRE_BACKUP_SCRIPT=/usr/local/bin/pre_backup.sh
-    #     volumes:
-    #         - ./data/duplicacy_naspool:/config
-    #         - ./config/duplicacy_naspool/pre_backup.sh:/usr/local/bin/pre_backup.sh
+    duplicacy_naspool:
+        image: jonoh/duplicacy:2.7.2
+        restart: always
+        environment:
+            # - BACKUP_CRON=1 1 * * *
+            # - RUN_JOB_IMMEDIATELY=yes
+            - PRUNE_CON=5 3 * * sun
+            - SNAPSHOT_ID=naspool
+            - DUPLICACY_SSH_KEY_FILE=/config/ssh_key
+            - DUPLICACY_PASSWORD=${DUPLICACY_PASSWORD}
+            - STORAGE_URL=sftp://rclone_serve_backup:2022//duplicacy
+            - JOB_RANDOM_DELAY=300
+            - PRUNE_KEEP_POLICIES=0:360;30:180;7:30;1:7
+            - PRE_BACKUP_SCRIPT=/usr/local/bin/pre_backup.sh
+        volumes:
+            - ./data/duplicacy_naspool:/config
+            - ./config/duplicacy_naspool/pre_backup.sh:/usr/local/bin/pre_backup.sh
 
     sponsorblockcast:
         image: erdnaxeli/castblock:latest
