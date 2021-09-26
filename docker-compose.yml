@@ -94,6 +94,7 @@ services:
             - PRUNE_KEEP_POLICIES=0:360;30:180;7:30;1:7
             - PRE_BACKUP_SCRIPT=/usr/local/bin/pre_backup.sh
         volumes:
+            - /home/ubuntu/restore:/data
             - ./data/duplicacy_naspool:/config
             - ./config/duplicacy_naspool/pre_backup.sh:/usr/local/bin/pre_backup.sh
 
