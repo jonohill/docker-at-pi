@@ -1,3 +1,4 @@
 key.txt
 secrets.env
 data/
+.DS_Store
