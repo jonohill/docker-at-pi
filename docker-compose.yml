@@ -139,3 +139,13 @@ services:
             - TUNNEL_NAME=tvheadend
             - TUNNEL_ID=${TV_TUNNEL_ID}
             - TUNNEL_SECRET=${TV_TUNNEL_SECRET}
+
+    background_encode:
+        image: background_encode
+        restart: always
+        volumes:
+            - /pool/convert:/convert
+        environment:
+            - ENCODE_VIDEO_DIR=jotta:/plex-media
+            - ENCODE_BUFFER_SIZE=20
+            - ENCODE_TRANSCODER=noop
