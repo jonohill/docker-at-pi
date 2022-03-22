@@ -106,40 +106,6 @@ services:
             - NET_ADMIN
         command: --mute-ads
 
-    tvheadend:
-        image: linuxserver/tvheadend
-        container_name: tvheadend
-        restart: always    
-        labels:
-            - autoheal=true
-        environment:
-            - PUID=1000
-            - PGID=1000
-            - TZ=Pacific/Auckland
-        volumes:
-            - ./data/tvheadend:/config
-        ports:
-            - 9981:9981
-        healthcheck:
-            test: curl -f https://tvheadend.hillnz.com || exit 1
-            interval: 30s
-            timeout: 10s
-            retries: 1
-            start_period: 30s
-
-    cloudflare_tvheadend:
-        image: jonoh/cloudflared:2022.2.1
-        restart: always
-        volumes:
-            - ./data/cloudflare_tvheadend:/config
-        environment:
-            - TZ=Pacific/Auckland
-            - TUNNEL_URL=http://tvheadend:9981
-            - ACCOUNT_ID=${CF_ACCOUNT_ID}
-            - TUNNEL_NAME=tvheadend
-            - TUNNEL_ID=${TV_TUNNEL_ID}
-            - TUNNEL_SECRET=${TV_TUNNEL_SECRET}
-
     background_encode:
         image: background_encode
         restart: always
