@@ -111,7 +111,7 @@ services:
         restart: always
         volumes:
             - /pool/convert:/convert
-            - /home/ubuntu/.config/rclone:/home/abc/.config/rclone
+            - /home/ubuntu/.config/rclone:/home/app/.config/rclone
         environment:
             - ENCODE_VIDEO_DIR=jotta:/plex-media
             - ENCODE_BUFFER_SIZE=20
