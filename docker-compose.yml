@@ -110,7 +110,7 @@ services:
         image: background_encode
         restart: always
         volumes:
-            - /pool/convert:/convert
+            - /pool/convert:/app/tmp
             - /home/ubuntu/.config/rclone:/home/app/.config/rclone
         environment:
             - ENCODE_VIDEO_DIR=jotta:/plex-media
