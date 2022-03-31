@@ -112,6 +112,7 @@ services:
         volumes:
             - /pool/convert:/app/tmp
             - /home/ubuntu/.config/rclone:/home/app/.config/rclone
+            - ./data/background_encode/blacklist.txt:/app/blacklist.txt
         environment:
             - ENCODE_VIDEO_DIR=jotta:/plex-media
             - ENCODE_BUFFER_SIZE=20
