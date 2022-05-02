@@ -22,7 +22,7 @@ services:
             - 1080:1080
 
     homebridge:
-        image: jonoh/homebridge:1.3.4
+        image: jonoh/homebridge:1.4.1
         restart: always
         network_mode: host
         environment:
