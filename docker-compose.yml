@@ -50,7 +50,7 @@ services:
             - TUNNEL_SECRET=${HOMEBRIDGE_TUNNEL_SECRET}
 
     rclone_serve_backup:
-        image: rclone/rclone:1.56.0
+        image: rclone/rclone:1.58.1
         restart: always
         entrypoint: nice
         command: >
