@@ -117,3 +117,11 @@ services:
             - ENCODE_VIDEO_DIR=jotta:/plex-media
             - ENCODE_BUFFER_SIZE=20
             - ENCODE_TRANSCODER=noop
+
+    speedtest:
+        image: linuxserver/librespeed:5.2.5
+        restart: always
+        environment:
+            - TZ=Pacific/Auckland
+        ports:
+            - 80:80
