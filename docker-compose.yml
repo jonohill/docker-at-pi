@@ -36,7 +36,7 @@ services:
             - ./data/homebridge:/homebridge
 
     cloudflare_homebridge:
-        image: jonoh/cloudflared:2022.5.3
+        image: jonoh/cloudflared:2022.11.1
         restart: always
         network_mode: host
         volumes:
