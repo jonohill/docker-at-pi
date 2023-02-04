@@ -49,6 +49,31 @@ services:
             - TUNNEL_ID=${HOMEBRIDGE_TUNNEL_ID}
             - TUNNEL_SECRET=${HOMEBRIDGE_TUNNEL_SECRET}
 
+    homeassistant:
+        image: ghcr.io/home-assistant/home-assistant:2023.2.1
+        restart: always
+        network_mode: host
+        volumes:
+            - ./data/homeassistant:/config
+        environment:
+            - TZ=Pacific/Auckland
+            - PGID=1000
+            - PUID=1000
+    
+    cloudflare_homeassistant:
+        image: jonoh/cloudflared:2022.11.1
+        restart: always
+        network_mode: host
+        volumes:
+            - ./data/cloudflare_homeassistant:/config
+        environment:
+            - TZ=Pacific/Auckland
+            - TUNNEL_URL=http://localhost:8123
+            - ACCOUNT_ID=${CF_ACCOUNT_ID}
+            - TUNNEL_NAME=homeassistant
+            - TUNNEL_ID=${HOMEASSISTANT_TUNNEL_ID}
+            - TUNNEL_SECRET=${HOMEASSISTANT_TUNNEL_SECRET}
+
     rclone_serve_backup:
         image: rclone/rclone:1.60.1
         restart: always
