@@ -61,7 +61,7 @@ services:
             - PUID=1000
     
     cloudflare_homeassistant:
-        image: jonoh/cloudflared:2022.11.1
+        image: jonoh/cloudflared:2022.12.1
         restart: always
         network_mode: host
         volumes:
