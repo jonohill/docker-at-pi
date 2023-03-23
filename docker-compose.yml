@@ -105,7 +105,7 @@ services:
     #         - /naspool/Backups/root:/storage
 
     duplicacy_naspool:
-        image: jonoh/duplicacy:2.7.2
+        image: jonoh/duplicacy:3.1.0
         restart: always
         environment:
             # - BACKUP_CRON=1 1 * * *
