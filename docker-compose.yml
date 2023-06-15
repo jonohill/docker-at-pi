@@ -36,7 +36,7 @@ services:
             - ./data/homebridge:/homebridge
 
     cloudflare_homebridge:
-        image: jonoh/cloudflared:2023.2.1
+        image: jonoh/cloudflared:2023.6.0
         restart: always
         network_mode: host
         volumes:
@@ -61,7 +61,7 @@ services:
             - PUID=1000
     
     cloudflare_homeassistant:
-        image: jonoh/cloudflared:2022.12.1
+        image: jonoh/cloudflared:2023.6.0
         restart: always
         network_mode: host
         volumes:
