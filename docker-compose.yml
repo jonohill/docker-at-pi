@@ -50,7 +50,7 @@ services:
             - TUNNEL_SECRET=${HOMEBRIDGE_TUNNEL_SECRET}
 
     homeassistant:
-        image: ghcr.io/home-assistant/home-assistant:2023.2.1
+        image: ghcr.io/home-assistant/home-assistant:2023.2.5
         restart: always
         network_mode: host
         volumes:
@@ -61,7 +61,7 @@ services:
             - PUID=1000
     
     cloudflare_homeassistant:
-        image: jonoh/cloudflared:2022.11.1
+        image: jonoh/cloudflared:2022.12.1
         restart: always
         network_mode: host
         volumes:
@@ -75,7 +75,7 @@ services:
             - TUNNEL_SECRET=${HOMEASSISTANT_TUNNEL_SECRET}
 
     rclone_serve_backup:
-        image: rclone/rclone:1.60.1
+        image: rclone/rclone:1.61.1
         restart: always
         entrypoint: nice
         command: >
