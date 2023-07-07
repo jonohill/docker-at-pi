@@ -3,7 +3,7 @@ version: '3.5'
 services:
 
     tailscale:
-        image: jonoh/tailscale:1.18.1
+        image: jonoh/tailscale:1.44.0
         restart: always
         volumes:
             - ./data/tailscale:/var/lib/tailscale
