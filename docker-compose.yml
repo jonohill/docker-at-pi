@@ -2,18 +2,18 @@ version: '3.5'
 
 services:
 
-    tailscale:
-        image: jonoh/tailscale:1.44.0
-        restart: always
-        volumes:
-            - ./data/tailscale:/var/lib/tailscale
-        devices:
-            - /dev/net/tun:/dev/net/tun
-        network_mode: host
-        privileged: true
-        environment:
-            - AUTH_KEY=${TAILSCALE_AUTH_KEY}
-        command: --advertise-exit-node --advertise-routes=10.0.8.0/24 --hostname=pi
+    # tailscale:
+    #     image: jonoh/tailscale:1.44.0
+    #     restart: always
+    #     volumes:
+    #         - ./data/tailscale:/var/lib/tailscale
+    #     devices:
+    #         - /dev/net/tun:/dev/net/tun
+    #     network_mode: host
+    #     privileged: true
+    #     environment:
+    #         - AUTH_KEY=${TAILSCALE_AUTH_KEY}
+    #     command: --advertise-exit-node --advertise-routes=10.0.8.0/24 --hostname=pi
 
     socks_proxy:
         image: jonoh/socks:1.4.3
@@ -74,18 +74,18 @@ services:
             - TUNNEL_ID=${HOMEASSISTANT_TUNNEL_ID}
             - TUNNEL_SECRET=${HOMEASSISTANT_TUNNEL_SECRET}
 
-    rclone_serve_backup:
-        image: rclone/rclone:1.63.0
-        restart: always
-        entrypoint: nice
-        command: >
-            -n 10 rclone
-            serve sftp
-            --addr :2022
-            --authorized-keys /config/authorized_keys
-            jotta-raw:/backup
-        volumes:
-            - ./data/rclone_serve_backup:/config
+    # rclone_serve_backup:
+    #     image: rclone/rclone:1.63.0
+    #     restart: always
+    #     entrypoint: nice
+    #     command: >
+    #         -n 10 rclone
+    #         serve sftp
+    #         --addr :2022
+    #         --authorized-keys /config/authorized_keys
+    #         jotta-raw:/backup
+    #     volumes:
+    #         - ./data/rclone_serve_backup:/config
 
     # duplicacy_root:
     #     image: jonoh/duplicacy:2.7.2
@@ -104,24 +104,24 @@ services:
     #         - ./data/duplicacy_root:/config
     #         - /naspool/Backups/root:/storage
 
-    duplicacy_naspool:
-        image: jonoh/duplicacy:2.7.2
-        restart: always
-        environment:
-            # - BACKUP_CRON=1 1 * * *
-            # - RUN_JOB_IMMEDIATELY=yes
-            - PRUNE_CON=5 3 * * sun
-            - SNAPSHOT_ID=naspool
-            - DUPLICACY_SSH_KEY_FILE=/config/ssh_key
-            - DUPLICACY_PASSWORD=${DUPLICACY_PASSWORD}
-            - STORAGE_URL=sftp://rclone_serve_backup:2022//duplicacy
-            - JOB_RANDOM_DELAY=300
-            - PRUNE_KEEP_POLICIES=0:360;30:180;7:30;1:7
-            - PRE_BACKUP_SCRIPT=/usr/local/bin/pre_backup.sh
-        volumes:
-            - /naspool:/data
-            - ./data/duplicacy_naspool:/config
-            - ./config/duplicacy_naspool/pre_backup.sh:/usr/local/bin/pre_backup.sh
+    # duplicacy_naspool:
+    #     image: jonoh/duplicacy:2.7.2
+    #     restart: always
+    #     environment:
+    #         # - BACKUP_CRON=1 1 * * *
+    #         # - RUN_JOB_IMMEDIATELY=yes
+    #         - PRUNE_CON=5 3 * * sun
+    #         - SNAPSHOT_ID=naspool
+    #         - DUPLICACY_SSH_KEY_FILE=/config/ssh_key
+    #         - DUPLICACY_PASSWORD=${DUPLICACY_PASSWORD}
+    #         - STORAGE_URL=sftp://rclone_serve_backup:2022//duplicacy
+    #         - JOB_RANDOM_DELAY=300
+    #         - PRUNE_KEEP_POLICIES=0:360;30:180;7:30;1:7
+    #         - PRE_BACKUP_SCRIPT=/usr/local/bin/pre_backup.sh
+    #     volumes:
+    #         - /naspool:/data
+    #         - ./data/duplicacy_naspool:/config
+    #         - ./config/duplicacy_naspool/pre_backup.sh:/usr/local/bin/pre_backup.sh
 
     sponsorblockcast:
         image: erdnaxeli/castblock:latest
@@ -131,17 +131,17 @@ services:
             - NET_ADMIN
         command: --mute-ads
 
-    background_encode:
-        image: jonoh/background_vt_encode:2023.001.552
-        restart: always
-        volumes:
-            - /pool/convert:/app/tmp
-            - /home/ubuntu/.config/rclone:/home/app/.config/rclone
-            - ./data/background_encode/blacklist.txt:/app/blacklist.txt
-        environment:
-            - ENCODE_VIDEO_DIR=jotta:/plex-media
-            - ENCODE_BUFFER_SIZE=20
-            - ENCODE_TRANSCODER=noop
+    # background_encode:
+    #     image: jonoh/background_vt_encode:2023.001.552
+    #     restart: always
+    #     volumes:
+    #         - /pool/convert:/app/tmp
+    #         - /home/ubuntu/.config/rclone:/home/app/.config/rclone
+    #         - ./data/background_encode/blacklist.txt:/app/blacklist.txt
+    #     environment:
+    #         - ENCODE_VIDEO_DIR=jotta:/plex-media
+    #         - ENCODE_BUFFER_SIZE=20
+    #         - ENCODE_TRANSCODER=noop
 
     speedtest:
         image: linuxserver/librespeed:5.2.5
