@@ -150,3 +150,19 @@ services:
             - TZ=Pacific/Auckland
         ports:
             - 80:80
+
+    resilio:
+        image: lscr.io/linuxserver/resilio-sync:2.7.3
+        container_name: resilio
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Pacific/Auckland
+        volumes:
+            - ./data/resilio:/config
+            - /pool:/sync/pool
+            - /home:/sync/home
+        ports:
+            - 8888:8888
+            - 55555:55555
+        restart: unless-stopped
