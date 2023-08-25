@@ -21,6 +21,12 @@ services:
         ports:
             - 1080:1080
 
+    http_proxy:
+        image: ubuntu/squid:5.2-22.04_beta
+        restart: always
+        ports:
+            - 3128:3128
+
     homebridge:
         image: jonoh/homebridge:1.4.1
         restart: always
