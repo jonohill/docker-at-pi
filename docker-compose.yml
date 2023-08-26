@@ -27,6 +27,16 @@ services:
         ports:
             - 3128:3128
 
+    nettopbox:
+        image: ghcr.io/jonohill/nettopbox:0.2.0
+        container_name: nettopbox
+        restart: always
+        ports:
+            - 53702:8080
+        environment:
+            - NTB_IPTV_URL=https://i.mjh.nz/nz/raw-tv.m3u8
+            - NTB_BASE_URL=http://nas.mahi-tet.ts.net:53702
+
     homebridge:
         image: jonoh/homebridge:1.4.1
         restart: always
