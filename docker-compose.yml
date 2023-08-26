@@ -32,8 +32,9 @@ services:
         container_name: nettopbox
         restart: always
         ports:
-            - 53702:8080
+            - 53702:53702
         environment:
+            - NTB_PORT=53702
             - NTB_IPTV_URL=https://i.mjh.nz/nz/raw-tv.m3u8
             - NTB_BASE_URL=http://nas.mahi-tet.ts.net:53702
 
