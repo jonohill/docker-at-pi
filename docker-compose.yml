@@ -185,7 +185,7 @@ services:
         restart: unless-stopped
 
     webtop:
-        image: lscr.io/linuxserver/webtop:debian-mate
+        image: lscr.io/linuxserver/webtop:debian-kde
         container_name: webtop
         security_opt:
             - seccomp:unconfined
