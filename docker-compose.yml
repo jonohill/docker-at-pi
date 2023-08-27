@@ -183,3 +183,22 @@ services:
             - 8888:8888
             - 55555:55555
         restart: unless-stopped
+
+    webtop:
+        image: lscr.io/linuxserver/webtop:ubuntu-mate
+        container_name: webtop
+        security_opt:
+            - seccomp:unconfined
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Pacific/Auckland
+        volumes:
+            - ./data/webtop:/config
+        ports:
+            - 3000:3000
+            - 3001:3001
+        devices:
+            - /dev/dri:/dev/dri
+        shm_size: 1gb
+        restart: unless-stopped
