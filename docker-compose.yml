@@ -148,17 +148,17 @@ services:
             - NET_ADMIN
         command: --mute-ads
 
-    # background_encode:
-    #     image: jonoh/background_vt_encode:2023.001.552
-    #     restart: always
-    #     volumes:
-    #         - /pool/convert:/app/tmp
-    #         - /home/ubuntu/.config/rclone:/home/app/.config/rclone
-    #         - ./data/background_encode/blacklist.txt:/app/blacklist.txt
-    #     environment:
-    #         - ENCODE_VIDEO_DIR=jotta:/plex-media
-    #         - ENCODE_BUFFER_SIZE=20
-    #         - ENCODE_TRANSCODER=noop
+    background_encode:
+        image: jonoh/background_vt_encode:2023.001.552
+        restart: always
+        volumes:
+            - /store/pool/tmp/convert:/app/tmp
+            - /home/nas/.config/rclone:/home/app/.config/rclone
+            - ./data/background_encode/blacklist.txt:/app/blacklist.txt
+        environment:
+            - ENCODE_VIDEO_DIR=jotta:/plex-media
+            - ENCODE_BUFFER_SIZE=20
+            - ENCODE_TRANSCODER=noop
 
     speedtest:
         image: linuxserver/librespeed:5.2.5
