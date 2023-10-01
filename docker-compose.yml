@@ -210,8 +210,5 @@ services:
     cloudflare_nas:
         image: cloudflare/cloudflared:2023.8.0
         network_mode: host
-        command: tunnel --no-autoupdate \
-            run \
-            --token ${NAS_TUNNEL_TOKEN}
-            --no-tls-verify \
-            --url https://localhost:9090
+        command: tunnel --no-autoupdate run --token ${NAS_TUNNEL_TOKEN}
+        
