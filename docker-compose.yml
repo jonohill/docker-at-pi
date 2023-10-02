@@ -153,7 +153,7 @@ services:
         restart: always
         volumes:
             - /store/pool/tmp/convert:/app/tmp
-            - /home/nas/.config/rclone:/home/app/.config/rclone
+            - ./data/background_encode/rclone:/home/app/.config/rclone
             - ./data/background_encode/blacklist.txt:/app/blacklist.txt
         environment:
             - ENCODE_VIDEO_DIR=jotta:/plex-media
