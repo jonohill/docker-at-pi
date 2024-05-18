@@ -161,7 +161,7 @@ services:
             - ENCODE_TRANSCODER=noop
 
     speedtest:
-        image: linuxserver/librespeed:5.2.5
+        image: linuxserver/librespeed:5.3.2
         restart: always
         environment:
             - TZ=Pacific/Auckland
