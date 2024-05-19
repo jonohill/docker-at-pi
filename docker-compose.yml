@@ -36,7 +36,7 @@ services:
         environment:
             - NTB_PORT=53702
             - NTB_IPTV_URL=https://i.mjh.nz/nz/raw-tv.m3u8
-            - NTB_BASE_URL=http://nas.mahi-tet.ts.net:53702
+            - NTB_BASE_URL=http://naspi.mahi-tet.ts.net:53702
 
     homebridge:
         image: jonoh/homebridge:1.4.1
@@ -148,17 +148,17 @@ services:
             - NET_ADMIN
         command: --mute-ads
 
-    background_encode:
-        image: jonoh/background_vt_encode:2023.001.552
-        restart: always
-        volumes:
-            - /store/pool/tmp/convert:/app/tmp
-            - ./data/background_encode/rclone:/home/app/.config/rclone
-            - ./data/background_encode/blacklist.txt:/app/blacklist.txt
-        environment:
-            - ENCODE_VIDEO_DIR=jotta:/plex-media
-            - ENCODE_BUFFER_SIZE=20
-            - ENCODE_TRANSCODER=noop
+    # background_encode:
+    #     image: jonoh/background_vt_encode:2023.001.552
+    #     restart: always
+    #     volumes:
+    #         - /store/pool/tmp/convert:/app/tmp
+    #         - ./data/background_encode/rclone:/home/app/.config/rclone
+    #         - ./data/background_encode/blacklist.txt:/app/blacklist.txt
+    #     environment:
+    #         - ENCODE_VIDEO_DIR=jotta:/plex-media
+    #         - ENCODE_BUFFER_SIZE=20
+    #         - ENCODE_TRANSCODER=noop
 
     speedtest:
         image: linuxserver/librespeed:5.3.2
@@ -168,21 +168,21 @@ services:
         ports:
             - 80:80
 
-    resilio:
-        image: lscr.io/linuxserver/resilio-sync:2.7.3
-        container_name: resilio
-        environment:
-            - PUID=1000
-            - PGID=1000
-            - TZ=Pacific/Auckland
-        volumes:
-            - ./data/resilio:/config
-            - /pool:/sync/pool
-            - /home:/sync/home
-        ports:
-            - 8888:8888
-            - 55555:55555
-        restart: unless-stopped
+    # resilio:
+    #     image: lscr.io/linuxserver/resilio-sync:2.7.3
+    #     container_name: resilio
+    #     environment:
+    #         - PUID=1000
+    #         - PGID=1000
+    #         - TZ=Pacific/Auckland
+    #     volumes:
+    #         - ./data/resilio:/config
+    #         - /pool:/sync/pool
+    #         - /home:/sync/home
+    #     ports:
+    #         - 8888:8888
+    #         - 55555:55555
+    #     restart: unless-stopped
 
     webtop:
         image: lscr.io/linuxserver/webtop:debian-kde
