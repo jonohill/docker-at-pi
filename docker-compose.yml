@@ -39,7 +39,7 @@ services:
             - NTB_BASE_URL=http://naspi.mahi-tet.ts.net:53702
 
     homebridge:
-        image: jonoh/homebridge:1.4.1
+        image: homebridge/homebridge:2024-06-27
         restart: always
         network_mode: host
         environment:
