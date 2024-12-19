@@ -204,11 +204,11 @@ services:
         restart: unless-stopped
 
     cloudflare_webtop:
-        image: cloudflare/cloudflared:2024.5.0
+        image: cloudflare/cloudflared:2024.12.2
         command: tunnel --no-autoupdate run --token ${WEBTOP_TUNNEL_TOKEN}
 
     cloudflare_nas:
-        image: cloudflare/cloudflared:2024.5.0
+        image: cloudflare/cloudflared:2024.12.2
         network_mode: host
         command: tunnel --no-autoupdate run --token ${NAS_TUNNEL_TOKEN}
         
