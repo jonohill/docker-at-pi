@@ -33,6 +33,8 @@ services:
         restart: always
         ports:
             - 53702:53702
+        dns:
+            - 1.1.1.1
         environment:
             - NTB_PORT=53702
             - NTB_IPTV_URL=https://i.mjh.nz/nz/raw-tv.m3u8
