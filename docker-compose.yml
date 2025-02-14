@@ -69,7 +69,7 @@ services:
             - TUNNEL_SECRET=${HOMEBRIDGE_TUNNEL_SECRET}
 
     homeassistant:
-        image: ghcr.io/home-assistant/home-assistant:2023.7.1
+        image: ghcr.io/home-assistant/home-assistant:2025.2.4
         restart: always
         network_mode: host
         volumes:
